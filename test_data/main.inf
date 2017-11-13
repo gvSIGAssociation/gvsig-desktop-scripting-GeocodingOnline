@@ -4,7 +4,7 @@ isolation = 0
 
 [Unit]
 type = Script
-name = autorun
+name = main
 description = 
 createdBy = 
 version = 

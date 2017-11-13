@@ -11,55 +11,7 @@ from es.unex.sextante.outputs import FileOutputChannel
 from geopy.geocoders import get_geocoder_for_service
 import ssl
 
-class MyFixedTableModel():
-    services = { 
-        'what3words': [["API_KEY","S8BXNPN4"],["what3words", "myname"]],
-        'nominatim': [["nominatim","S8BXNPN4"]],
-        'googlev3': [["googlev3","S8BXNPN4"]],
-        'arcgis': [["arcgis","S8BXNPN4"]],
-        'google': [["google","S8BXNPN4"]],
-        'yandex': [["yandex","S8BXNPN4"]],
-        'photon': [["photon","S8BXNPN4"]],
-        'databc': [["databc","S8BXNPN4"]],
-        'liveaddress':[["liveaddress","S8BXNPN4"]]
-    }
-    table = None
-    def __init__(self, params):
-        model = params.getParameter("GEOLOCATOR")
-        service = model.getParameterValueAsString()
-        lenParams = len(self.services[service])
-        import random
-        lenParams = random.randint(0,20)
-        print "Myfixedtablemodel: ", service, lenParams
-        from es.unex.sextante.parameters import ParameterFixedTable
-        self.table = ParameterFixedTable()
-        from es.unex.sextante.parameters import FixedTableModel
-        ftm = FixedTableModel(["Params","Keys"],lenParams, True)
-        from java.util import ArrayList
 
-        a = ArrayList(2)
-        a.add(["API"])
-        a.add(["KEY"])
-        print a, type(a)
-        ftm.setAttributes(["Parms","Keys"],[a], True) 
-        
-        self.table.setParameterValue(ftm)
-        self.table.setParameterName("PARAMS_TABLE")
-        from es.unex.sextante.additionalInfo import AdditionalInfoFixedTable
-        aift = AdditionalInfoFixedTable(["Params","Keys"],lenParams, True)
-        self.table.setParameterAdditionalInfo(aift)
-        import pdb; pdb.set_trace()
-        
-    def getRowCount(self):
-        return 10 #self.services[len(self.service)]
-    def getP(self):
-        return self.table
-
-        
-        
-"""
-Format string: "{}, Spain"
-"""
 class Geocoding(ToolboxProcess):
   """Tabla con campo direccion a shape file"""
   
@@ -77,28 +29,12 @@ class Geocoding(ToolboxProcess):
     # Indicamos que precisamos un parametro LAYER, del tipo punto y que es obligatorio
     
     # http://geopy.readthedocs.io/en/latest/
-    params.addSelection("GEOLOCATOR", "Seleciona Geocoder", ['what3words','nominatim','googlev3', 'arcgis', 'google', 'yandex', 'photon', 'databc', 'liveaddress'])
+    params.addSelection("GEOLOCATOR", "Seleciona Geocoder", ['googlev3', 'arcgis', 'google', 'yandex', 'photon', 'databc', 'liveaddress','nominatim'])
     params.addInputTable("TABLE", "Tabla de direcciones", True)
     params.addString("STRING_PREFIX", "Agregar prefijo","")
     params.addString("STRING_SUFFIX", "Agregar sufijo","")
     params.addTableField("ADDRESS", "Campo de direcciones", "TABLE", True)
     params.addBoolean("ADD_NOT_FOUND", "Agregar direcciones no encontradas", False)
-      
-    #params.addFixedTable("PARAMS_TABLE", "Tabla de parametros", ["Param","Key"], 2, False) 
-
-    
-    #table = params.getParameter("PARAMS_TABLE")
-    #print table, type(table)
-    #paramGeolocator = params.getParameter("GEOLOCATOR")
-    paramsTableModel = MyFixedTableModel(params) #paramGeolocator)
-    
-    #table.setParameterValue(paramsTableModel)
-    #table.setParameterName("PARAMS_MYTABLE")
-    
-    #params.addParameter(table)
-    params.addParameter(paramsTableModel.getP())
-    
-    #import pdb; pdb.set_trace()
     
     #params.addFixedTable("PARAMS_TABLE", "Tabla de parametros", ["Param","Key"], 1, False) 
     #table = params.getParameter("PARAMS_TABLE")
@@ -125,18 +61,7 @@ class Geocoding(ToolboxProcess):
       string_prefix = params.getParameterValueAsString("STRING_PREFIX")
       string_suffix = params.getParameterValueAsString("STRING_SUFFIX")
       add_not_found = params.getParameterValueAsBoolean("ADD_NOT_FOUND")
-      params_table = params.getParameterValueAsArrayList("PARAMS_TABLE")[0]
-
-    
-      print "params_table"
-      for p in params_table.getData():
-          #if str(p[1]) == "0" or 
-          print "i: ", p[0], " p: ", p[1]
-      
-      #import pdb; pdb.set_trace()
-      
-      print "** params:: table :: ", params_table
-      
+      #params_table = params.getParameterValueAsArrayList("PARAMS_TABLE")[0]
 
       
       if string_prefix != "" or string_suffix != "":
