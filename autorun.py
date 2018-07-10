@@ -1,10 +1,6 @@
 # encoding: utf-8
 
 import gvsig
-import os
-
-open(os.path.normpath(os.path.join(__file__,"..","..", "__init__.py")), "a").close()
-
 from addons.GeocodingPlugin.geoprocessgeocoding import Geocoding
 
 def main(*args):
