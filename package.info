@@ -1,11 +1,11 @@
 #
-#Mon Nov 13 15:02:02 CET 2017
-owner=Oscar Martinez
+#Tue Jul 10 07:45:22 CEST 2018
+owner=
 code=GeocodingPlugin
 java-version=j1_7
 official=true
 type=Script
-version=1.0.0-3
+version=1.0.0-5
 state=testing
 operating-system=all
 dependencies=
@@ -13,9 +13,9 @@ sources-url=
 web-url=
 architecture=all
 model-version=1.0.1
-categories=
+categories=Geoprocess
 description=
 owner-url=
-buildNumber=3
-gvSIG-version=2.3.1
+buildNumber=5
+gvSIG-version=2.4.1
 name=Geoprocess\: Geocoding
