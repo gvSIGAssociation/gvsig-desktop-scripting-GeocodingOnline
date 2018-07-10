@@ -1,6 +1,7 @@
 [script]
 enable = true
 isolation = 0
+isolationGroup = gvsig-base
 
 [Unit]
 type = Script
